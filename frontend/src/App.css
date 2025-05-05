@@ -1,0 +1,214 @@
+.message {
+  position: relative;
+  transition: all 0.3s ease;
+  animation: messageAppear 0.3s ease forwards;
+}
+
+.message-user {
+  border-radius: 18px 18px 4px 18px;
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+  box-shadow: 0 4px 6px rgba(14, 165, 233, 0.25);
+}
+
+.message-bot {
+  border-radius: 18px 18px 18px 4px;
+  border-left: 4px solid #10b981;
+}
+
+.message:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow effect for the user avatar */
+.user-avatar {
+  position: relative;
+}
+
+.user-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.flex:hover .user-avatar::after {
+  opacity: 0.7;
+}
+
+/* Animated dots for loading state */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  margin: 0 2px;
+  background-color: #10b981;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation: pulse 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation: pulse 1s infinite ease-in-out 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation: pulse 1s infinite ease-in-out 0.4s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+/* Custom scrollbar for the chat area */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 5px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 5px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Input field and button effects */
+.input:focus {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+}
+
+.send-button {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.send-button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.send-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Card floating effect */
+.floating-card {
+  transition: all 0.3s ease;
+}
+
+.floating-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Background decorative elements */
+.blob-decoration {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+.blob-decoration-1 {
+  background-color: #0ea5e9;
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: -100px;
+}
+
+.blob-decoration-2 {
+  background-color: #10b981;
+  width: 250px;
+  height: 250px;
+  bottom: -100px;
+  left: -50px;
+}
+
+/* Header decoration with gradient underline */
+.gradient-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.gradient-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(to right, #0ea5e9, #10b981);
+  border-radius: 2px;
+}
+
+/* Wave effect for footer */
+.wave-divider {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+}
+
+.wave-divider svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .chat-container {
+    height: calc(80vh - 60px);
+  }
+  
+  .message {
+    max-width: 90%;
+  }
+  
+  .blob-decoration {
+    opacity: 0.1;
+  }
+}
