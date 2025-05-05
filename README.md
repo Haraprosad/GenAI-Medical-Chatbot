@@ -1,16 +1,75 @@
-# GenAI-Medical-Chatbot
+# GenAI Medical Chatbot 🏥
 
-This repository contains a GenAI (Generative AI) project named GenAI-Medical-Chatbot.
+![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python Version](https://img.shields.io/badge/python-3.9-green)
+![Framework](https://img.shields.io/badge/framework-FastAPI-009688)
+![Frontend](https://img.shields.io/badge/frontend-React-61DAFB)
 
-## Getting Started
+A sophisticated medical Q&A system built with RAG (Retrieval Augmented Generation) that leverages the power of LLMs to provide accurate medical information by retrieving context from trusted medical literature.
 
-Follow these instructions to get the project up and running on your local machine for development and testing purposes.
+![Medical Chatbot Demo](demo.gif)
+
+## 🌟 Features
+
+- **RAG-Based Medical Knowledge System**: Retrieves contextual information from medical documents to generate accurate responses
+- **Document Processing Pipeline**: Extracts, chunks, and embeds information from PDF medical sources
+- **Vector Database Integration**: Efficiently stores and retrieves medical knowledge using Pinecone
+- **Modern React Frontend**: Responsive UI with dark/light mode, keyboard shortcuts, and smooth animations
+- **FastAPI Backend**: High-performance API endpoints with comprehensive error handling
+- **Local LLM Integration**: Uses the Ollama framework to run Llama3.2 models locally
+
+## 🏗️ Architecture
+
+```
+┌────────────────┐     ┌──────────────────┐     ┌────────────────────┐
+│                │     │                  │     │                    │
+│  PDF Medical   │────▶│  Text Extraction │────▶│  Text Chunking     │
+│  Documents     │     │  & Processing    │     │  & Preparation     │
+│                │     │                  │     │                    │
+└────────────────┘     └──────────────────┘     └─────────┬──────────┘
+                                                         │
+                                                         ▼
+┌────────────────┐     ┌──────────────────┐     ┌────────────────────┐
+│                │     │                  │     │                    │
+│  User Query    │────▶│  Query Embedding │     │  Vector Embeddings │
+│  (Frontend)    │     │  & Processing    │◀────│  (HuggingFace)     │
+│                │     │                  │     │                    │
+└────────┬───────┘     └────────┬─────────┘     └────────────────────┘
+         │                      │
+         │                      ▼
+┌────────▼───────┐     ┌──────────────────┐     ┌────────────────────┐
+│                │     │                  │     │                    │
+│  FastAPI       │◀────│  RAG Knowledge   │◀────│  Pinecone Vector   │
+│  Backend       │     │  Retrieval       │     │  Database          │
+│                │     │                  │     │                    │
+└────────────────┘     └──────────────────┘     └────────────────────┘
+```
+
+## 🔧 Tech Stack
+
+### Backend
+- **FastAPI**: High-performance web framework for building APIs
+- **LangChain**: Framework for developing applications powered by language models
+- **Pinecone**: Vector database for storing and retrieving embeddings
+- **HuggingFace Embeddings**: Sentence transformers for text embedding
+- **Ollama**: Framework for running Llama3.2 models locally
+- **PyPDF**: For extracting text from PDF medical documents
+
+### Frontend
+- **React**: Modern UI library for building user interfaces
+- **TailwindCSS**: Utility-first CSS framework for rapid UI development
+- **Axios**: Promise-based HTTP client for API requests
+- **React Icons**: Icon library for React applications
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Git
 - Anaconda or Miniconda
-- Python 3.x (specific version requirements are in requirements.txt)
+- Python 3.9+
+- Node.js and npm
+- Ollama installed locally
 
 ### Installation
 
@@ -18,78 +77,122 @@ Follow these instructions to get the project up and running on your local machin
 
 ```bash
 git clone https://github.com/Haraprosad/GenAI-Medical-Chatbot.git
-cd genai-medical-chatbot
+cd GenAI-Medical-Chatbot
 ```
 
-#### Step 2: Create and Activate Conda Environment
+#### Step 2: Set Up the Backend
 
-Create a new conda environment:
+Create and activate a conda environment:
 ```bash
 conda create -n medical-chatbot-env python=3.9
-```
-
-Activate the environment:
-```bash
 conda activate medical-chatbot-env
 ```
 
-#### Step 3: Install Requirements
-
-Install all the required packages using pip:
+Install backend dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+Set up your environment variables in `.env`:
+```
+PINECONE_API_KEY="your_pinecone_api_key"
+```
 
-[Theses will be added gradually]
+#### Step 3: Process Documents and Create Vector Database
 
-## Project Structure
+Place your medical PDFs in the `Data/` directory, then build the vector database:
+```bash
+python store_index.py
+```
+
+#### Step 4: Set Up the Frontend
+
+Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+Install frontend dependencies:
+```bash
+npm install
+```
+
+#### Step 5: Run the Application
+
+Start the backend server:
+```bash
+# In the root directory
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+In a separate terminal, start the frontend:
+```bash
+# In the frontend directory
+cd frontend
+npm run dev
+```
+
+Access the application at `http://localhost:5173`
+
+## 📂 Project Structure
 
 ```
-genai-project/
-├── data/              # Data files used for training/testing
-├── models/            # Model files
-├── notebooks/         # Jupyter notebooks for experiments
-├── src/               # Source code
+GenAI-Medical-Chatbot/
+├── app.py                  # FastAPI backend implementation
+├── store_index.py          # Script to process PDFs and build Pinecone index
+├── requirements.txt        # Python dependencies
+├── src/
 │   ├── __init__.py
-│   ├── data/          # Data processing scripts
-│   ├── models/        # Model definition files
-│   └── utils/         # Utility functions
-├── tests/             # Test files
-├── .gitignore
-├── requirements.txt   # Project dependencies
-└── README.md          # This file
+│   ├── helper.py           # Utility functions for document processing
+│   └── prompt.py           # LLM prompt templates
+├── Data/                   # Medical PDF documents
+│   └── Medical_book.pdf
+├── frontend/               # React frontend application
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # API service layer
+│   │   ├── App.jsx         # Main React component
+│   │   └── ...
+│   ├── package.json        # Frontend dependencies
+│   └── ...
+└── research/
+    └── trials.ipynb        # Development notebook with prototype code
 ```
 
-### Dependencies
+## 🔄 How the RAG System Works
 
-MedicalBot relies on the following libraries:
+1. **Document Processing**: Medical PDFs are loaded, parsed, and split into manageable chunks
+2. **Embedding Generation**: Text chunks are converted to vector embeddings using HuggingFace models
+3. **Vector Database Storage**: Embeddings are stored in Pinecone with metadata
+4. **Query Processing**: User questions are embedded and semantically searched in Pinecone
+5. **Context Retrieval**: Relevant medical context is extracted from the vector database
+6. **Response Generation**: The LLM generates responses using the retrieved context and medical knowledge
 
-- **sentence-transformers (2.2.2)**: Powers the semantic understanding of medical queries by converting text into embeddings that capture meaning
-- **langchain**: Core framework that connects various components of the medical knowledge retrieval system
-- **flask**: Web framework used to create the interface and API endpoints for the MedicalBot
-- **pypdf**: Handles the extraction of medical information from PDF documents to build the knowledge base
-- **python-dotenv**: Manages environment variables for secure API key storage
-- **pinecone[grpc]**: Vector database for efficient storage and retrieval of medical text embeddings
-- **langchain_pinecone**: Integration between LangChain and Pinecone for vector search operations
-- **langchain_community**: Provides access to community-contributed components and integrations
-- **langchain_openai**: Connects to OpenAI models for generating accurate medical responses
-- **langchain_experimental**: Implements experimental features for advanced medical query processing
+## 🧩 Key Components
 
+### Frontend
+- **Welcome Component**: Provides a user-friendly introduction with sample questions
+- **Chat Interface**: Smooth, responsive design with typing indicators and message animations
+- **Dark/Light Mode**: Toggle between visual themes for optimal viewing experience
+- **Keyboard Shortcuts**: Productivity enhancements for frequent actions
 
-## Features
+### Backend
+- **FastAPI Framework**: RESTful API endpoints with automatic OpenAPI documentation
+- **RAG Pipeline**: Sophisticated document retrieval and answer generation system
+- **Vector Search**: Semantic similarity search for finding relevant medical information
+- **Context-Aware Responses**: Ensures medically accurate answers based on source documents
 
-- [Features will be added gradually]
+## 📝 License
 
-## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-[MIT]
+## 📬 Contact
 
+Haraprosad Biswas - bharaprosad@gmail.com
 
-## Contact
+Project Link: [https://github.com/Haraprosad/GenAI-Medical-Chatbot](https://github.com/Haraprosad/GenAI-Medical-Chatbot)
 
-[Haraprosad Biswas] - [bharaprosad@gmail.com]
+---
 
-Project Link: [https://github.com/Haraprosad/GenAI-Medical-Chatbot.git](https://github.com/Haraprosad/GenAI-Medical-Chatbot.git)
+⭐ Star this repository if you find it useful!
 
