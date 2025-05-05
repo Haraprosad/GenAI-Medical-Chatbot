@@ -469,8 +469,10 @@ function App() {
             </p>
           </div>
           <p className="text-sm">
-            © {new Date().getFullYear()} Medical Assistant | Powered by LLM
-            Technology
+            © {new Date().getFullYear()} Medical Assistant | Developed by - 
+            <a href="https://www.linkedin.com/in/haraprosadbiswas/">
+              (Haraprosad Biswas)
+            </a>
           </p>
         </footer>
       </div>

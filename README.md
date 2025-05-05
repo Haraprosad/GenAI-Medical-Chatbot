@@ -7,7 +7,7 @@
 
 A sophisticated medical Q&A system built with RAG (Retrieval Augmented Generation) that leverages the power of LLMs to provide accurate medical information by retrieving context from trusted medical literature.
 
-![Medical Chatbot Demo](demo.gif)
+[![Medical Chatbot Demo](https://img.youtube.com/vi/6nqiheij6fQ/0.jpg)](https://www.youtube.com/watch?v=6nqiheij6fQ)
 
 ## 🌟 Features
 
